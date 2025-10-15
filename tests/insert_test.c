@@ -38,7 +38,7 @@ END_TEST
 START_TEST(test_insert_out_of_range) {
   char *src = "Hi";
   char *str = "There";
-  char *res = s21_insert(src, str, 10);  // index > len(src)
+  char *res = s21_insert(src, str, 10);
   ck_assert_ptr_eq(res, s21_NULL);
 }
 END_TEST

@@ -48,7 +48,7 @@ END_TEST
 
 START_TEST(test_trim_null_trim_chars) {
   char *src = "   test   ";
-  char *res = s21_trim(src, s21_NULL);  // должен удалить пробелы
+  char *res = s21_trim(src, s21_NULL);
   ck_assert_str_eq(res, "test");
   free(res);
 }

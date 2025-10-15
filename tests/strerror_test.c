@@ -2,7 +2,7 @@
 
 START_TEST(test_strerror_valid_errors) {
   for (int i = 0; i < 134;
-       i++) {  // 134 — достаточно для Linux; на macOS можно меньше
+       i++) {
     char *s21_result = s21_strerror(i);
     char *orig_result = strerror(i);
     ck_assert_str_eq(s21_result, orig_result);

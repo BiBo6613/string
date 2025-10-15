@@ -1,6 +1,5 @@
 #include "tests.h"
 
-// === Базовые тесты ===
 START_TEST(test_sscanf_int) {
   int a1 = 0, a2 = 0;
   char str[] = "12345";
@@ -91,8 +90,6 @@ START_TEST(test_sscanf_mixed) {
 }
 END_TEST
 
-// === Дополнительные тесты ===
-
 START_TEST(test_sscanf_hex_octal) {
   int a1 = 0, a2 = 0;
   int b1 = 0, b2 = 0;
@@ -158,7 +155,6 @@ START_TEST(test_sscanf_percent_literal) {
 }
 END_TEST
 
-// === Добавляем тесты в suite ===
 Suite *sscanf_test(void) {
   Suite *s = suite_create("\033[36ms21_sscanf\033[0m");
   TCase *tc = tcase_create("Core");

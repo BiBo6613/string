@@ -19,7 +19,7 @@ END_TEST
 START_TEST(test_to_lower_numbers_symbols) {
   char *src = "123!@#";
   char *res = s21_to_lower(src);
-  ck_assert_str_eq(res, "123!@#");  // Без изменений
+  ck_assert_str_eq(res, "123!@#");
   free(res);
 }
 END_TEST
