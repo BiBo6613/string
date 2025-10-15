@@ -12,12 +12,12 @@
 
 #include "s21_string.h"
 
-#define S21_ERRLIST_SIZE 134  // количество ошибок (для Linux; для macOS другое)
+#define S21_ERRLIST_SIZE 134
 #define MAX_UNKNOWN_ERROR_LEN 64
 
 #if __linux__
 // -------------------------
-// Таблица ошибок для Linux
+//     Linux error list
 // -------------------------
 static const char *s21_error_list[] = {
     "Success",
@@ -156,7 +156,7 @@ static const char *s21_error_list[] = {
     "Memory page has hardware error"};
 #elif __APPLE__
 // -------------------------
-// Таблица ошибок для macOS
+//    macOS error list
 // -------------------------
 static const char *s21_error_list[] = {"Undefined error: 0",
                                        "Operation not permitted",
@@ -287,7 +287,7 @@ char *s21_strchr(const char *str, int c) {
   }
 
   if (c == '\0') {
-    result = (char *)str;  // указывает на '\0'
+    result = (char *)str;
   }
 
   return result;
@@ -426,16 +426,14 @@ char *s21_strtok(char *str, const char *delim) {
   if (str == s21_NULL && next_token == s21_NULL) return s21_NULL;
   if (str != s21_NULL) next_token = str;
 
-  // Пропускаем все начальные разделители
   next_token += s21_strspn(next_token, delim);
-  if (*next_token == '\0') {  // Строка закончилась
+  if (*next_token == '\0') {
     next_token = s21_NULL;
     return s21_NULL;
   }
 
   char *token_start = next_token;
 
-  // Находим конец токена
   char *delim_pos = s21_strpbrk(token_start, delim);
   if (delim_pos) {
     *delim_pos = '\0';
@@ -457,7 +455,7 @@ void *s21_to_upper(const char *str) {
 
   for (s21_size_t i = 0; i < len; i++) {
     if (str[i] >= 'a' && str[i] <= 'z')
-      result[i] = str[i] - 32;  // Преобразуем вручную
+      result[i] = str[i] - 32;
     else
       result[i] = str[i];
   }
@@ -490,24 +488,19 @@ void *s21_insert(const char *src, const char *str, size_t start_index) {
   s21_size_t src_len = s21_strlen(src);
   s21_size_t str_len = s21_strlen(str);
 
-  // Проверяем, что индекс не выходит за пределы исходной строки
   if (start_index > src_len) return s21_NULL;
 
-  // Выделяем память под новую строку
   char *result = (char *)malloc(src_len + str_len + 1);
   if (result == s21_NULL) return s21_NULL;
 
-  // Копируем часть до start_index
   for (s21_size_t i = 0; i < start_index; i++) {
     result[i] = src[i];
   }
 
-  // Вставляем строку str
   for (s21_size_t j = 0; j < str_len; j++) {
     result[start_index + j] = str[j];
   }
 
-  // Копируем оставшуюся часть src
   for (s21_size_t k = start_index; k < src_len; k++) {
     result[str_len + k] = src[k];
   }
@@ -520,7 +513,7 @@ void *s21_trim(const char *src, const char *trim_chars) {
   if (src == s21_NULL) return s21_NULL;
 
   if (trim_chars == s21_NULL)
-    trim_chars = " \t\n\r\v\f";  // стандартные пробелы
+    trim_chars = " \t\n\r\v\f";
 
   s21_size_t src_len = s21_strlen(src);
   if (src_len == 0) {
@@ -531,19 +524,16 @@ void *s21_trim(const char *src, const char *trim_chars) {
   s21_size_t start = 0;
   s21_size_t end = src_len - 1;
 
-  // Находим индекс первого символа, который не входит в trim_chars
   while (start < src_len && s21_strchr(trim_chars, src[start]) != s21_NULL) {
     start++;
   }
 
-  // Находим индекс последнего символа, который не входит в trim_chars
   while (end > start && s21_strchr(trim_chars, src[end]) != s21_NULL) {
     end--;
   }
 
   s21_size_t new_len = (start > end) ? 0 : end - start + 1;
 
-  // Выделяем память под обрезанную строку
   char *result = (char *)malloc(new_len + 1);
   if (result == s21_NULL) return s21_NULL;
 
