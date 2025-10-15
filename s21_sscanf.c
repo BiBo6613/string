@@ -51,12 +51,10 @@ format_end_spec parser_format(const char **format, va_list *args) {
       (*format)++;
     }
   }
-  // определяем длину
   if (s21_strchr("hlL", **format)) {
     spec.length_mod = **format;
     (*format)++;
   }
-  // определение спецификатора
   if (s21_strchr("cdieEfgGosuxXpn", **format)) {
     spec.specifier = **format;
     (*format)++;
@@ -177,7 +175,6 @@ void processing_string_sscanf(format_end_spec *fs, const char **str,
   }
 }
 
-// s21_sscanf va s21_sprintf uchun qo'shimcha funksiyalar
 long s21_strtol(const char *str, char **endptr, int base) {
   while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r' ||
          *str == '\f' || *str == '\v') {
