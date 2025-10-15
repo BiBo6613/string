@@ -1,7 +1,6 @@
 #ifndef S21_STRING_H
 #define S21_STRING_H
 
-// ishlatilyotgan kutibxonalar
 #include <assert.h>
 #include <ctype.h>
 #include <limits.h>
@@ -12,7 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// NULL
 #define s21_NULL ((void *)0)
 typedef unsigned long s21_size_t;
 
@@ -43,7 +41,6 @@ void *s21_trim(const char *src, const char *trim_chars);
 
 //===================================s21_sprintf====================================
 
-// s21_sprintf struktura
 typedef struct {
   int flag_minus;
   int flag_plus;
@@ -61,7 +58,7 @@ typedef struct {
   int length_l;
   int length_L;
 } flags_and_args;
-// s21_sprintf funksiyalari
+
 int handle_percent(const char **format, va_list *args, char **src);
 void dispatch_specifier(flags_and_args *spec, const char **format,
                         va_list *args, char **src);
@@ -92,14 +89,12 @@ void copy_char(const char **format, char **src);
 
 //===================================s21_sscanf====================================
 
-// s21_sscanf struktura
 typedef struct {
   int width;
   char length_mod;
   char specifier;
 } format_end_spec;
 
-// s21_sscanf funksiyalari
 format_end_spec parser_format(const char **format, va_list *args);
 void processing_specifier(format_end_spec *fs, const char **str, va_list *args,
                           int *assigned);
