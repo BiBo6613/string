@@ -75,8 +75,8 @@ void processing_specifier(format_end_spec *fs, const char **str, va_list *args,
   }
 }
 
-void processing_number(format_end_spec *fs, const char **str, va_list *args,
-                       int *assigned) {
+void processing_number(format_end_spec* fs, const char** str, va_list* args,
+                       int* assigned) {
   while (isspace(**str)) (*str)++;
 
   int base;
@@ -90,34 +90,38 @@ void processing_number(format_end_spec *fs, const char **str, va_list *args,
   } else {
     base = 10;
   }
-  const char *parse_start = *str;
-  char *buffer = malloc((fs->width + 1) * sizeof(char));
-  const char *limit = *str;
+  const char* parse_start = *str;
+  int width =
+      fs->width > 0 ? fs->width : 128;
+  char* buffer = malloc((width + 1) * sizeof(char));
+  const char* limit = *str;
   int count = 0;
-  while (*limit && (fs->width == 0 || count < fs->width)) {
+
+  while (*limit && count < width) {
     buffer[count++] = *limit++;
   }
   buffer[count] = '\0';
-  char *buf_end;
+  char* buf_end;
   long value = s21_strtol(buffer, &buf_end, base);
   if (buf_end != buffer) {
     int parsed_len = buf_end - buffer;
     *str = parse_start + parsed_len;
 
     if (fs->length_mod == 'h') {
-      short *dst = va_arg(*args, short *);
+      short* dst = va_arg(*args, short*);
       *dst = (short)value;
     } else if (fs->length_mod == 'l') {
-      long *dst = va_arg(*args, long *);
+      long* dst = va_arg(*args, long*);
       *dst = (long)value;
     } else {
-      int *dst = va_arg(*args, int *);
+      int* dst = va_arg(*args, int*);
       *dst = (int)value;
     }
     (*assigned)++;
   }
   free(buffer);
 }
+
 
 void processing_double(format_end_spec *fs, const char **str, va_list *args,
                        int *assigned) {
